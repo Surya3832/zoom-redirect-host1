@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Zoom Phone Redirect</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 40px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Connecting to Zoom Phone...</h2>
+    <p id="status">If Zoom Phone doesn't open, please dial manually.</p>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const number = params.get("number");
+
+      if (number) {
+        const cleaned = number.replace(/\D/g, '');
+        const zoomPhoneURI = `zoomphonecall://${cleaned}`;
+        window.location.href =zoomPhoneURI;
+
+        setTimeout(() => {
+          document.getElementById("status").innerHTML += `<br /><strong>${cleaned}</strong>`;
+        }, 3000);
+      } else {
+        document.getElementById("status").textContent = "Invalid number.";
+      }
+    </script>
+  </body>
+</html>
